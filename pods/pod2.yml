@@ -10,7 +10,15 @@ spec:
     env: qa
   containers:
     - name: example-pod
-      image: bhagyam90/kubia
+      image: luksa/kubia-unhealthy
       ports:
         - containerPort: 8080
           protocol: TCP
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 8080
+        initialDelaySeconds: 15
+        timeoutSeconds: 5
+        periodSeconds: 10
+        failureThreshold: 5
